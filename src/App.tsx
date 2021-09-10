@@ -5,6 +5,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
+      <CardBoard />
     </>
   );
 }
