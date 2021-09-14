@@ -9,7 +9,7 @@ type Props = {
 const Card: React.FC<Props> = ({alt, src, key}) => {
     return (
         <CardWrapper>
-            <CardImage src={src} />
+            <CardImage key={key} src={src} alt={alt} />
         </CardWrapper>
     );
 }

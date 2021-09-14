@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
+export const AppWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`
 
 export const BoardWrapper = styled.div`
     margin: 20px auto;
     height: 80vh;
-    width: 55vw;
+    width: 60vw;
 `
 
 export const BoardGrid = styled.div`
