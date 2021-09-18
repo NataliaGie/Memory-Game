@@ -1,15 +1,21 @@
-import { CardImage, CardWrapper } from './CardStyles';
+import { CardFront, CardBack, CardWrapper } from './CardStyles';
+import cardBackImg from '../../images/cardBack.png';
 
 type Props = {
-    alt: string;
     src: string;
     key: number;
+    onClick: () => void;
+    id: number;
+    flipped: boolean;
 }
 
-const Card: React.FC<Props> = ({alt, src, key}) => {
+const Card: React.FC<Props> = ({src, key, onClick, flipped}) => {
     return (
         <CardWrapper>
-            <CardImage key={key} src={src} alt={alt} />
+            <CardBack  
+                onClick={onClick} flipped={flipped} src={cardBackImg} alt={"Back of card"} />
+            <CardFront 
+                flipped={flipped} key={key} src={src} alt={'Front of card'} />
         </CardWrapper>
     );
 }
