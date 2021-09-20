@@ -7,14 +7,12 @@ export const AppWrapper = styled.div`
 `
 
 export const BoardWrapper = styled.div`
-    margin: 20px auto;
+    margin: 25px auto 0;
     height: 80vh;
     width: 60vw;
 `
 
 export const BoardGrid = styled.div`
-    width: 100%;
-    height: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);

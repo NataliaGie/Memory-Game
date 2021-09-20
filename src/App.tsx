@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppWrapper, BoardGrid, BoardWrapper } from "./AppStyles";
 import GlobalStyle from "./global";
 import StartGameButton from "./components/StartGameButton/StartGameButton";
@@ -8,29 +8,32 @@ import dog from './images/dog.jpg';
 import flamingo from './images/flamingo.jpg';
 import giraffe from './images/giraffe.jpg';
 import iguana from './images/iguana.jpg';
-import peacock from './images/peacock.jpg';
+import jaguar from './images/jaguar.jpg';
 
 function App() {
 
   const animals = [
-    { img: panda, name: 'panda1', flipped: false, id: 1},
-    { img: dog, name: 'dog1', flipped: false, id: 2},
-    { img: flamingo, name: 'flamingo1', flipped: false, id: 3},
-    { img: giraffe, name: 'giraffe1', flipped: false, id: 4},
-    { img: iguana, name: 'iguana1', flipped: false, id: 5},
-    { img: peacock, name: 'peacock1', flipped: false, id: 6},
-    { img: panda, name: 'panda2', flipped: false, id: 7},
-    { img: dog, name: 'dog2', flipped: false, id: 8},
-    { img: flamingo, name: 'flamingo2', flipped: false, id: 9},
-    { img: giraffe, name: 'giraffe2', flipped: false, id: 10},
-    { img: iguana, name: 'iguana2', flipped: false, id: 11},
-    { img: peacock, name: 'peacock2', flipped: false, id: 12}
-    ];
+    { img: panda, flipped: false, id: 1},
+    { img: dog, flipped: false, id: 2},
+    { img: flamingo, flipped: false, id: 3},
+    { img: giraffe, flipped: false, id: 4},
+    { img: jaguar, flipped: false, id: 5},
+    { img: iguana, flipped: false, id: 6},
+    { img: panda, flipped: false, id: 7},
+    { img: dog, flipped: false, id: 8},
+    { img: flamingo, flipped: false, id: 9},
+    { img: giraffe, flipped: false, id: 10},
+    { img: jaguar, flipped: false, id: 12},
+    { img: iguana, flipped: false, id: 11}
+  ];
+
+  type onChangeEvent = React.MouseEvent<HTMLElement>;
 
   const isAnimalFlipped = animals.map(array => array.flipped);
 
   const [cards, setCards] = useState(animals);
   const [game, newGame] = useState(false);
+  const [clickedCard, setClickedCard] = useState(0);
 
 // Durstenfeld shuffle algorithm implementation
   const shuffleCards = (array: any) => {
@@ -50,10 +53,22 @@ function App() {
 
   const onCardClickHandler = (currentCard: any, id: number) => {
     console.log(`I clicked ${currentCard.name} ${id}`);
+    const flippedCard = Object.assign({}, currentCard, currentCard.flipped = true)
     setCards(prevState => 
-      prevState.map((card) => card.id === currentCard.id ? {...card, flipped: true} : card)
+      prevState.map((card) => card.id === currentCard.id ? flippedCard : card)
     )
-    }
+    setClickedCard(clickedCard + 1);
+    console.log(clickedCard);
+  }
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      if (clickedCard === 2) {
+        setCards(animals);
+        setClickedCard(0);
+      }
+    }, 400);
+  }, [clickedCard]);
 
   return (
     <>
@@ -62,12 +77,12 @@ function App() {
       <BoardWrapper>
           <BoardGrid>
             {game ? 
-              cards.map((card, index) => {
+              cards.map((card) => {
                 return (
                 <Card
                   onClick={() => onCardClickHandler(card, card.id)}
                   flipped={card.flipped}
-                  key={index}
+                  key={card.id}
                   src={card.img}
                   id={card.id} />
                 )})
