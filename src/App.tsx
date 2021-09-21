@@ -33,7 +33,7 @@ function App() {
 
   const [cards, setCards] = useState(animals);
   const [game, newGame] = useState(false);
-  const [clickedCard, setClickedCard] = useState(0);
+  const [clickedCard, setClickedCard] = useState<any | null>([]);
 
 // Durstenfeld shuffle algorithm implementation
   const shuffleCards = (array: any) => {
@@ -52,22 +52,21 @@ function App() {
   }
 
   const onCardClickHandler = (currentCard: any, id: number) => {
-    console.log(`I clicked ${currentCard.name} ${id}`);
     const flippedCard = Object.assign({}, currentCard, currentCard.flipped = true)
     setCards(prevState => 
       prevState.map((card) => card.id === currentCard.id ? flippedCard : card)
-    )
-    setClickedCard(clickedCard + 1);
-    console.log(clickedCard);
+    );
+    setClickedCard((prevState: any[]) => [...prevState, prevState.push(currentCard)]);
+    return clickedCard;
   }
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
-      if (clickedCard === 2) {
+      if (clickedCard.length >= 2) {
         setCards(animals);
-        setClickedCard(0);
+        setClickedCard([]);
       }
-    }, 400);
+    }, 500);
   }, [clickedCard]);
 
   return (
