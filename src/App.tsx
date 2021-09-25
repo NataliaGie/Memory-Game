@@ -13,27 +13,24 @@ import jaguar from './images/jaguar.jpg';
 function App() {
 
   const animals = [
-    { img: panda, flipped: false, id: 1},
-    { img: dog, flipped: false, id: 2},
-    { img: flamingo, flipped: false, id: 3},
-    { img: giraffe, flipped: false, id: 4},
-    { img: jaguar, flipped: false, id: 5},
-    { img: iguana, flipped: false, id: 6},
-    { img: panda, flipped: false, id: 7},
-    { img: dog, flipped: false, id: 8},
-    { img: flamingo, flipped: false, id: 9},
-    { img: giraffe, flipped: false, id: 10},
-    { img: jaguar, flipped: false, id: 12},
-    { img: iguana, flipped: false, id: 11}
+    { img: panda, name: 'panda', flipped: false, matched: false, id: 1},
+    { img: dog, name: 'dog', flipped: false, matched: false, id: 2},
+    { img: flamingo, name: 'flamingo', flipped: false, matched: false, id: 3},
+    { img: giraffe, name: 'giraffe', flipped: false, matched: false, id: 4},
+    { img: jaguar, name: 'jaguar', flipped: false, matched: false, id: 5},
+    { img: iguana, name: 'iguana', flipped: false, matched: false, id: 6},
+    { img: panda, name: 'panda', flipped: false, matched: false, id: 7},
+    { img: dog, name: 'dog', flipped: false, matched: false, id: 8},
+    { img: flamingo, name: 'flamingo', flipped: false, matched: false, id: 9},
+    { img: giraffe, name: 'giraffe', flipped: false, matched: false, id: 10},
+    { img: jaguar, name: 'jaguar', flipped: false, matched: false, id: 12},
+    { img: iguana, name: 'iguana', flipped: false, matched: false, id: 11}
   ];
-
-  type onChangeEvent = React.MouseEvent<HTMLElement>;
-
-  const isAnimalFlipped = animals.map(array => array.flipped);
 
   const [cards, setCards] = useState(animals);
   const [game, newGame] = useState(false);
-  const [clickedCard, setClickedCard] = useState<any | null>([]);
+  const [clickedCards, setClickedCards] = useState<any | null>([]);
+  const [matched, setMatched] = useState(false);
 
 // Durstenfeld shuffle algorithm implementation
   const shuffleCards = (array: any) => {
@@ -49,25 +46,36 @@ function App() {
   const startingGameHandler = () => {
     setCards(shuffleCards(animals));
     newGame(true);
-  }
+  };
 
   const onCardClickHandler = (currentCard: any, id: number) => {
+    setClickedCards(clickedCards.concat(currentCard));
     const flippedCard = Object.assign({}, currentCard, currentCard.flipped = true)
     setCards(prevState => 
       prevState.map((card) => card.id === currentCard.id ? flippedCard : card)
     );
-    setClickedCard((prevState: any[]) => [...prevState, prevState.push(currentCard)]);
-    return clickedCard;
+  };
+
+  const checkIsMatching = () => {
+    if (clickedCards.length === 2 && clickedCards[0].name === clickedCards[1].name) {
+      setCards(prevState =>
+        prevState.map(card => card.name === clickedCards[0].name ? {...card, matched: true} : card));
+    }
   }
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      if (clickedCard.length >= 2) {
-        setCards(animals);
-        setClickedCard([]);
-      }
+    window.setTimeout(() => {
+    if (clickedCards.length >= 2) {
+      checkIsMatching();
+      setClickedCards([]);
+      setCards(prevState => 
+      prevState.map(card => Object.assign({}, card, card.flipped = false))
+      )}
     }, 500);
-  }, [clickedCard]);
+  }, [clickedCards]);
+
+
+  console.log(clickedCards);
 
   return (
     <>
@@ -83,7 +91,9 @@ function App() {
                   flipped={card.flipped}
                   key={card.id}
                   src={card.img}
-                  id={card.id} />
+                  id={card.id}
+                  matched={card.matched}
+                  cardName={card.name} />
                 )})
             : null}
           </BoardGrid>
