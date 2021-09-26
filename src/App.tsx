@@ -60,6 +60,7 @@ function App() {
     if (clickedCards.length === 2 && clickedCards[0].name === clickedCards[1].name) {
       setCards(prevState =>
         prevState.map(card => card.name === clickedCards[0].name ? {...card, matched: true} : card));
+      return cards;
     }
   }
 
@@ -74,8 +75,17 @@ function App() {
     }, 500);
   }, [clickedCards]);
 
+  useEffect (() => {
+    let checkedMatched = cards.map(card => card.matched);
+    let isEveryCardMatched = checkedMatched.every(element => element === true);
+    window.setTimeout(() => {
+      if (isEveryCardMatched) {
+        return alert('You win!!');
+      }
+    }, 1500);
+  }, [cards]);
 
-  console.log(clickedCards);
+  console.log(cards);
 
   return (
     <>
