@@ -1,7 +1,9 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { AppWrapper, BoardGrid, BoardWrapper } from "./AppStyles";
 import GlobalStyle from "./global";
 import StartGameButton from "./components/StartGameButton/StartGameButton";
+import Modal from "./components/Modal/Modal";
 import Card from "./components/Card/Card";
 import panda from './images/panda.jpg';
 import dog from './images/dog.jpg';
@@ -30,7 +32,7 @@ function App() {
   const [cards, setCards] = useState(animals);
   const [game, newGame] = useState(false);
   const [clickedCards, setClickedCards] = useState<any | null>([]);
-  const [matched, setMatched] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
 // Durstenfeld shuffle algorithm implementation
   const shuffleCards = (array: any) => {
@@ -56,6 +58,10 @@ function App() {
     );
   };
 
+  const onModalButtonClickHandler = () => {
+    setModalOpen(false);
+  }
+
   const checkIsMatching = () => {
     if (clickedCards.length === 2 && clickedCards[0].name === clickedCards[1].name) {
       setCards(prevState =>
@@ -80,9 +86,9 @@ function App() {
     let isEveryCardMatched = checkedMatched.every(element => element === true);
     window.setTimeout(() => {
       if (isEveryCardMatched) {
-        return alert('You win!!');
+        setModalOpen(true);
       }
-    }, 1500);
+    }, 1000);
   }, [cards]);
 
   console.log(cards);
@@ -93,7 +99,7 @@ function App() {
       <AppWrapper>
       <BoardWrapper>
           <BoardGrid>
-            {game ? 
+            {game ?
               cards.map((card) => {
                 return (
                 <Card
@@ -109,6 +115,9 @@ function App() {
           </BoardGrid>
         </BoardWrapper>
         <StartGameButton onClick={startingGameHandler} />
+        <Modal
+          isOpen={isModalOpen}
+          onClick={onModalButtonClickHandler}/>
       </AppWrapper>
     </>
   );
