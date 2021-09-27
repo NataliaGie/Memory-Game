@@ -7,7 +7,10 @@ type Props = {
 const StartGameButton: React.FC<Props> = ({onClick}) => {
     return (
         <ButtonWrapper>
-            <GameButton onClick={onClick}>Start Game</GameButton>
+            <GameButton
+             onClick={onClick}>
+                 Start game!
+            </GameButton>
         </ButtonWrapper>
     )
 }

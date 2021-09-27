@@ -5,7 +5,8 @@ type Props = {
     isOpen: boolean;
 }
 
-const buttonBlue = '#1e98bd';
+const buttonDarkBlue = '#1e98bd';
+const buttonLightBlue = '#68b9d4';
 
 export const ModalWrapper = styled.div<Props>`
     position: absolute;
@@ -34,11 +35,18 @@ export const ModalMessage = styled.p`
 export const ModalButton = styled.button`
     width: 25%;
     height: 14%;
+    cursor: pointer;
     font-size: 1.25rem;
     text-align: center;
     margin-top: 60px;
     background-color: transparent;
     border-radius: 10px;
-    border-color: ${buttonBlue};
-    color: ${buttonBlue};
+    border-color: ${buttonDarkBlue};
+    color: ${buttonDarkBlue};
+
+    &:hover {
+        color: white;
+        background-color: ${buttonLightBlue};
+        border-color: ${buttonLightBlue};
+    }
 `
