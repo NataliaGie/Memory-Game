@@ -1,10 +1,10 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { AppWrapper, BoardGrid, BoardWrapper } from "./AppStyles";
 import GlobalStyle from "./global";
 import StartGameButton from "./components/StartGameButton/StartGameButton";
 import Modal from "./components/Modal/Modal";
 import Card from "./components/Card/Card";
+import CardPlaceholder from "./components/CardPlaceholder";
 import panda from './images/panda.jpg';
 import dog from './images/dog.jpg';
 import flamingo from './images/flamingo.jpg';
@@ -111,7 +111,10 @@ function App() {
                   matched={card.matched}
                   cardName={card.name} />
                 )})
-            : null}
+              : 
+              cards.map(() => {
+                return <CardPlaceholder />
+              })}
           </BoardGrid>
         </BoardWrapper>
         <StartGameButton onClick={startingGameHandler} />

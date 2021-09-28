@@ -11,9 +11,9 @@ export const AppWrapper = styled.div`
 `
 
 export const BoardWrapper = styled.div`
-    margin: 50px 40px;
+    margin: 40px;
     height: 85vh;
-    width: 57vw;
+    width: 55vw;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background-color: white;
 `
@@ -22,7 +22,7 @@ export const BoardGrid = styled.div`
     height: 95%;
     width: 95%;
     margin: 0 auto;
-    padding-top: 13px;
+    padding-top: 25px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);

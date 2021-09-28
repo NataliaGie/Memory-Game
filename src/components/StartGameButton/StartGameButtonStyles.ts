@@ -8,7 +8,7 @@ export const GameButton = styled.button`
     height: 100px;
     margin: 20% 80px;
     cursor: pointer;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     font-size: 1.8rem;
     border-color: ${buttonDarkGreen};

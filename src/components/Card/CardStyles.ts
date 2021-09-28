@@ -19,7 +19,7 @@ const mainStyles = css<Props>`
     margin: 0 auto;
     height: 100%;
     width: 100%;
-    border: 1.3px solid black;
+    border: 1.3px solid grey;
     object-fit: cover;
     transition: all 0.5s;
     backface-visibility: hidden;
