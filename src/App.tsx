@@ -91,8 +91,6 @@ function App() {
     }, 1000);
   }, [cards]);
 
-  console.log(cards);
-
   return (
     <>
       <GlobalStyle />
@@ -112,8 +110,8 @@ function App() {
                   cardName={card.name} />
                 )})
               : 
-              cards.map(() => {
-                return <CardPlaceholder />
+              cards.map((item, index) => {
+                return <CardPlaceholder key={index} />
               })}
           </BoardGrid>
         </BoardWrapper>
