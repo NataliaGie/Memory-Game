@@ -1,5 +1,6 @@
 # About project
 
+Live demo: https://memory-game444.netlify.app/
 This project is a memory card game that we can play in the browser. 
 
 We have:
